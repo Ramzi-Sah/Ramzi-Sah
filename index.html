@@ -1,1 +1,79 @@
-hello world
+<!DOCTYPE >
+<html>
+	<head>
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>My portfolio</title>
+
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/section_1.css">
+
+        <!--  Three.js CDN  -->
+        <script src="https://cdn.jsdelivr.net/npm/three@0.136.0/build/three.min.js"></script>
+
+        <!--  GLTFLoader CDN  -->
+        <script src="https://cdn.jsdelivr.net/npm/three@0.136.0/examples/js/loaders/GLTFLoader.js"></script>
+
+        <!-- jquery -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+        <!-- bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- onepage-scroll -->
+        <script src="assets/addons/onepage-scroll-1.3.1/jquery.onepage-scroll.js"></script>
+        <link rel="stylesheet" href="assets/addons/onepage-scroll-1.3.1/onepage-scroll.css">
+
+        <!-- typed.js -->
+        <script src="https://unpkg.com/typed.js@2.0.14/dist/typed.umd.js"></script>
+	</head>
+	<body>
+
+        <div class="main">
+            <section id="landing-page">
+                <canvas id="background"></canvas>
+                <div class="container">
+                    <div class="row">
+                        <div class="col welcome-text">
+                            Hi, my
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col welcome-text">
+                            name is Ramzi.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="height: 30px;">
+                            <span id="typed_welcome"></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="cv-page">
+                <div>cv-page</div>
+            </section>
+            <section id="projects-page">
+                <div>projects-page</div>
+            </section>
+            <section id="contacts-page">
+                <div>contacts-page</div>
+            </section>
+        </div>
+
+        <script>
+            // typed welcome text
+            var typed = new Typed('#typed_welcome', {
+            strings: ['', 'Welcome to my Portfolio.', 'I love programing.'],
+            loop: true,
+            typeSpeed: 50,
+            backDelay: 5000,
+            });
+        </script>
+
+        <script type="module" src="js/section1_bg.js"></script>
+        <script src="js/snapScrolling.js"></script>
+	</body>
+</html>
