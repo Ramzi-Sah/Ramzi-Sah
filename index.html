@@ -28,12 +28,33 @@
 
         <!-- typed.js -->
         <script src="https://unpkg.com/typed.js@2.0.14/dist/typed.umd.js"></script>
+
+        <!-- TweenLite -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenLite.min.js"></script>
+
 	</head>
 	<body>
+        <!-- UNDER CONSTRUCTION BANNER -->
+        <div class="container-fluid position-absolute" id="under_construction_banner">
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-1 text-center">
+                    <image src="assets/images/under-construction.png" style="height: 28px; width: 28px;">
+                </div>
+                <div class="col-2 text-center">
+                    <label>SITE UNDER CONSTUCTION</label>
+                </div>
+                <div class="col-1 text-center">
+                    <image src="assets/images/under-construction.png" style="height: 28px; width: 28px;">
+                </div>
+                <div class="col-4"></div>
+            </div>
+        </div>
+        
+        <canvas id="background_1"></canvas>
 
         <div class="main">
-            <section id="landing-page">
-                <canvas id="background"></canvas>
+            <section id="landing-page"  class="section_1">
                 <div class="container">
                     <div class="row">
                         <div class="col welcome-text">
@@ -52,8 +73,76 @@
                     </div>
                 </div>
             </section>
-            <section id="cv-page">
-                <div>cv-page</div>
+            <section id="cv-page" class="section_2">
+                <canvas id="background_2"></canvas>
+                <div class="container" style="color:white; margin:50px;">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col ">
+                                    <image src="assets/images/Avatar.jpg" style="height: 128; width: 128;"/>
+                                </div>
+                                <div class="col">
+                                    <label>Name:</label><br>
+                                    Ramzi
+                                </div>
+                                <div class="col">
+                                    <label>Age:</label><br>
+                                    25 Years
+                                </div>
+                                <div class="col">
+                                    <label>From:</label><br>
+                                    Algeria
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-6">
+                            <h5>About me:</h5>
+                            <p>
+                                Software engineering enthusiast, I have dedicated the past 8 years of my life to mastering the art of coding, Being entirely self-taught, I have invested countless hours into learning and perfecting my skills, without any regrets. My love for programming has only grown stronger over time. today, I am determined to turn my hobby into a fulfilling career. With a desire to do what I love for a living, so I never have to work a day in my life.
+                            </p>
+                        </div>
+                        <div class="col-6">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <h5>Skills:</h5>
+                            <div class="row">
+                                <div class="col-2">
+                                    C++
+                                </div>
+                                <div class="col-2">
+                                    ********
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    JS
+                                </div>
+                                <div class="col-2">
+                                    ********
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    Python
+                                </div>
+                                <div class="col-2">
+                                    ********
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                        </div>
+                    </div>
+                </div>
             </section>
             <section id="projects-page">
                 <div>projects-page</div>
@@ -66,14 +155,14 @@
         <script>
             // typed welcome text
             var typed = new Typed('#typed_welcome', {
-            strings: ['', 'Welcome to my Portfolio.', 'I love programing.'],
+            strings: ['^5000', 'Welcome to my Portfolio.^3000', 'I love programing.^5000000'],
             loop: true,
-            typeSpeed: 50,
-            backDelay: 5000,
+            typeSpeed: 45,
+            backDelay: 0,
             });
         </script>
 
         <script type="module" src="js/section1_bg.js"></script>
-        <script src="js/snapScrolling.js"></script>
+        <script type="module" src="js/section2_bg.js"></script>
 	</body>
 </html>

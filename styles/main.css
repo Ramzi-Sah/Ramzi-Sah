@@ -1,6 +1,10 @@
 body { 
     margin: 0; 
-    
+}
+
+#under_construction_banner{
+
+    z-index: 9999999;
 }
 
 canvas {
@@ -9,12 +13,18 @@ canvas {
 
     width: 100vw;
     height: 100vh;
-
     top: 0;
     left: 0;
 
-    z-index: -9999;
+    z-index: 9999;
 }
+.section_1 {
+    background-color: #f5efe6;
+}
+.section_2 {
+    background: linear-gradient(162deg, rgba(0,42,92,1) 35%, rgba(0,99,176,1) 100%);
+}
+
 .main > section {
     display: flex;
     justify-content: center;
