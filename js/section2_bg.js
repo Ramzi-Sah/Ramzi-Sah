@@ -1,6 +1,6 @@
 
 // config
-var PADDING = 50;
+var PADDING = 100;
 
 // init canvas
 var c = document.getElementById("background_2");
@@ -41,11 +41,11 @@ function draw() {
 
     // subject text Right bottom
     ctx.save();
-    ctx.font = (height/720) * 20 + "px Arial";
+    ctx.font = (height/720) * 18 + "px monospace";
     ctx.globalAlpha = 0.5;
     ctx.translate(width - PADDING, height - PADDING);
     ctx.rotate(-Math.PI/2);
-    ctx.fillText("SUBJECT #01 | Ramzi Sah", 25, PADDING/2);
+    ctx.fillText("SUBJECT #01 | Ramzi Sah", 0, PADDING/3);
     ctx.restore();
 
     /*

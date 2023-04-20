@@ -1,5 +1,6 @@
 // config
 var NEXT_PAGE_TIME = 1000;
+var PADDING = 100;
 
 //////////////////////////////////////////////////////////////////////////////////
 // Building scene
@@ -9,8 +10,7 @@ var scene = new THREE.Scene();
 
 // Create a basic perspective camera
 var camera = new THREE.PerspectiveCamera(65, document.documentElement.clientWidth / window.innerHeight, 0.1, 100);
-camera.position.y = 6;
-camera.position.z = 7;
+camera.position.set(0, 6, 7);
 camera.lookAt(0, 0, -10);
 
 // Create a renderer with Antialiasing
@@ -27,8 +27,8 @@ var renderer = new THREE.WebGLRenderer({
 function canvasSize() {
   if (canvaHalfSize) {
     // canvas size
-    var canvas_width = (document.documentElement.clientWidth/2 - 50);
-    var canvas_height = window.innerHeight - 50;
+    var canvas_width = (document.documentElement.clientWidth/2 - 100);
+    var canvas_height = window.innerHeight - 100;
 
     canvas.style.left = "50vw";
     canvas.style.width = canvas_width + "px";
@@ -65,11 +65,13 @@ renderer.setSize(document.documentElement.clientWidth, window.innerHeight);
 
 // handle blender gamma correction
 renderer.outputEncoding = THREE.sRGBEncoding;
+
 /* 
 // helpers
 const gridHelper = new THREE.GridHelper(200, 200);
 scene.add(gridHelper);
- */
+*/
+
 // point Light
 const light = new THREE.DirectionalLight(0xffffff, 0.8);
 light.position.set(0, 5, 5);
@@ -115,6 +117,9 @@ window.addEventListener("mousemove", (e) => {
 //////////////////////////////////////////////////////////////////////////////////
 // more
 //////////////////////////////////////////////////////////////////////////////////
+
+// get loading screen
+var loadingDiv = document.getElementById('loading-screen');
 
 // load Character
 var mixer = new THREE.AnimationMixer;
@@ -201,10 +206,15 @@ loader.load('assets/models/scene1.gltf', function(gltf) {
       chairLoopAction.play();
     };
   });
-
   //////////////////////////////////////////////////////////////////////////////////
   // handle scroll
   //////////////////////////////////////////////////////////////////////////////////
+
+  // setup hover change color
+  var falling_contacts_icons = document.getElementsByClassName("falling-contact-icon");
+  var rotate_char = false;
+
+
   $(".main").onepage_scroll({
     sectionContainer: "section",
     easing: "ease",
@@ -218,6 +228,27 @@ loader.load('assets/models/scene1.gltf', function(gltf) {
     beforeMove: function(index) {
       // console.log("moving to " + index);
 
+      model_character.rotation.y = 0;
+
+      for (var i = 0; i < falling_contacts_icons.length; i++) {
+        let element = falling_contacts_icons[i];
+        element.addEventListener("mouseenter", function() {
+          if (index == 2) {
+            element.getElementsByTagName("svg")[0].style.fill = 'rgb(255 255 255 / 50%)';
+          } else {
+            element.getElementsByTagName("svg")[0].style.fill = 'rgb(0 0 0 / 50%)';
+          }
+        });
+        element.addEventListener("mouseleave", function() {
+          if (index == 2) {
+            element.getElementsByTagName("svg")[0].style.fill = 'rgb(255 255 255 / 30%)';
+          } else {
+            element.getElementsByTagName("svg")[0].style.fill = 'rgb(0 0 0 / 30%)';
+          }
+        });
+      }
+
+
       if (index == 1) {
         // canvas size
         canvaHalfSize = false;
@@ -228,6 +259,24 @@ loader.load('assets/models/scene1.gltf', function(gltf) {
         model_chair.visible = true;
         model_PC.visible = true;
         model_bureau.visible = true;
+
+        rotate_char = false;
+
+        // falling contacts handle color
+        var color = {shade: 255};
+        TweenLite.to(color, 
+          NEXT_PAGE_TIME / 2000,
+          {
+            shade: 0,
+            onUpdate: () => {
+              document.getElementsByClassName("falling-contact-line")[0].style.backgroundColor  = 'rgb(' + color.shade +' ' + color.shade +' ' + color.shade +' / 30%)';
+              
+              for (var i = 0; i < falling_contacts_icons.length; i++) {
+                falling_contacts_icons[i].getElementsByTagName("svg")[0].style.fill  = 'rgb(' + color.shade +' ' + color.shade +' ' + color.shade +' / 30%)'
+              }
+            }
+          }
+        ).delay(0.1);
 
         // set opacity
         model_bureau.children.forEach((model_child) => {
@@ -318,7 +367,6 @@ loader.load('assets/models/scene1.gltf', function(gltf) {
         chairAction.stop();
         chairLoopAction.play();
       } else if (index == 2) {
-
         // canvas size
         canvaHalfSize = true;
         canvasSize(canvaHalfSize);
@@ -328,6 +376,25 @@ loader.load('assets/models/scene1.gltf', function(gltf) {
         model_chair.visible = false;
         model_PC.visible = false;
         model_bureau.visible = false;
+
+        rotate_char = true;
+        
+
+        // falling contacts handle color
+        var color = {shade: 0};
+        TweenLite.to(color, 
+          NEXT_PAGE_TIME / 2000,
+          {
+            shade: 255,
+            onUpdate: () => {
+              document.getElementsByClassName("falling-contact-line")[0].style.backgroundColor  = 'rgb(' + color.shade +' ' + color.shade +' ' + color.shade +' / 30%)';
+              
+              for (var i = 0; i < falling_contacts_icons.length; i++) {
+                falling_contacts_icons[i].getElementsByTagName("svg")[0].style.fill  = 'rgb(' + color.shade +' ' + color.shade +' ' + color.shade +' / 30%)'
+              }
+            }
+          }
+        ).delay(0.3);
         
         // character to wireframe
         model_character.children.forEach((model_child) => {
@@ -396,7 +463,7 @@ loader.load('assets/models/scene1.gltf', function(gltf) {
         TweenLite.to(camera.position, 
           NEXT_PAGE_TIME / 2000,
           {
-            //x: -2.5,
+            x: 0,
             y: 5,
             z: 6,
           }
@@ -410,6 +477,22 @@ loader.load('assets/models/scene1.gltf', function(gltf) {
         characterAction.stop();
         characterTPoseAction.play();
       } else if (index == 3) {
+        // falling contacts handle color
+        var color = {shade: 255};
+        TweenLite.to(color, 
+          NEXT_PAGE_TIME / 2000,
+          {
+            shade: 0,
+            onUpdate: () => {
+              document.getElementsByClassName("falling-contact-line")[0].style.backgroundColor  = 'rgb(' + color.shade +' ' + color.shade +' ' + color.shade +' / 30%)';
+              
+              for (var i = 0; i < falling_contacts_icons.length; i++) {
+                falling_contacts_icons[i].getElementsByTagName("svg")[0].style.fill  = 'rgb(' + color.shade +' ' + color.shade +' ' + color.shade +' / 30%)'
+              }
+            }
+          }
+        ).delay(0.3);
+
         model_character.children.forEach((model_child) => {
             if(model_child instanceof THREE.Mesh) {
               TweenLite.to(model_child.material, 
@@ -425,11 +508,12 @@ loader.load('assets/models/scene1.gltf', function(gltf) {
     },  // This option accepts a callback function. The function will be called before the page moves.
     afterMove: function(index) {
         // console.log("moved to " + index);
-      if (index == 2) {
-        document.getElementById("under_construction_banner").style.color = "white";
-      } else {
-        document.getElementById("under_construction_banner").style.color = "black";
-      }
+
+        if (index == 2) {
+
+        } else {
+
+        }
     },
  });
 
@@ -443,11 +527,24 @@ loader.load('assets/models/scene1.gltf', function(gltf) {
     // update animation mixer
     mixer.update(clock.getDelta());
 
-    // model_character.rotation.y += 0.01;
+    if (rotate_char)
+      model_character.rotation.y += 0.01;
 
     // Render the scene
     renderer.render(scene, camera);
   };
 
   render();
+  
+  // loading screen
+  var loadingDivPos = {top: 0};
+  TweenLite.to(loadingDivPos, 
+    0.5,
+    {
+      top: -100,
+      onUpdate: () => {
+        loadingDiv.style.top = loadingDivPos.top + 'vh';
+      }
+    }
+  )
 }, undefined, undefined);
